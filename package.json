@@ -1,0 +1,69 @@
+{
+  "name": "hit-count",
+  "displayName": "DMC Style Meter",
+  "description": "Devil May Cry style combo rating for your coding sessions",
+  "version": "0.0.1",
+  "publisher": "hit-count",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dmcStyleMeter.reset",
+        "title": "DMC Style Meter: Reset Rank"
+      },
+      {
+        "command": "dmcStyleMeter.showPanel",
+        "title": "DMC Style Meter: Show Animation Panel"
+      }
+    ],
+    "configuration": {
+      "title": "DMC Style Meter",
+      "properties": {
+        "dmcStyleMeter.decayRate": {
+          "type": "number",
+          "default": 0.015,
+          "description": "Decay rate multiplier (higher = faster decay)",
+          "minimum": 0.001,
+          "maximum": 0.1
+        },
+        "dmcStyleMeter.comboWindow": {
+          "type": "number",
+          "default": 200,
+          "description": "Milliseconds between keypresses to count as a combo",
+          "minimum": 50,
+          "maximum": 1000
+        },
+        "dmcStyleMeter.pasteThreshold": {
+          "type": "number",
+          "default": 50,
+          "description": "Character count above which a single change is treated as a paste (not awarded full points)",
+          "minimum": 1
+        },
+        "dmcStyleMeter.gracePeriod": {
+          "type": "number",
+          "default": 1500,
+          "description": "Milliseconds of inactivity before decay begins",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "node esbuild.mjs --production",
+    "compile": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.80.0",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.4.0"
+  }
+}

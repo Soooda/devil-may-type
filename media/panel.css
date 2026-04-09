@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--vscode-editor-background, #1e1e1e);
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Impact', 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
+}
+
+/* ── Rank display container ───────────────────────────────── */
+.rank-display {
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.rank-display.hidden {
+  display: none;
+}
+
+/* ── Rank letter (big DMC-style letter) ──────────────────── */
+.rank-letter {
+  font-size: 120px;
+  font-weight: 900;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  line-height: 1;
+  /* color is set via JS inline style */
+  /* text-shadow is set via JS inline style */
+  -webkit-text-stroke: 3px rgba(255,255,255,0.15);
+}
+
+/* ── Rank sub-label ──────────────────────────────────────── */
+.rank-name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-top: -8px;
+  opacity: 0.9;
+}
+
+/* ── Entry: slides in from right + elastic scale ─────────── */
+@keyframes rankEntry {
+  0%   { transform: translateX(160px) scale(2.8); opacity: 0; }
+  55%  { transform: translateX(-12px) scale(0.93); opacity: 1; }
+  75%  { transform: translateX(6px)  scale(1.04); opacity: 1; }
+  100% { transform: translateX(0)    scale(1);    opacity: 1; }
+}
+
+/* ── Glow pulse ──────────────────────────────────────────── */
+@keyframes glowPulse {
+  0%, 100% { filter: brightness(1)   drop-shadow(0 0 8px  currentColor); }
+  50%       { filter: brightness(1.4) drop-shadow(0 0 28px currentColor)
+                                      drop-shadow(0 0 55px currentColor); }
+}
+
+/* ── Exit: floats up + fades out ─────────────────────────── */
+@keyframes rankExit {
+  0%   { transform: translateY(0);    opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+
+/* ── Applied by JS ─────────────────────────────────────────  */
+.rank-display.entering .rank-letter {
+  animation:
+    rankEntry  0.45s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards,
+    glowPulse  0.7s  ease-in-out 0.45s 3 forwards;
+}
+
+.rank-display.entering .rank-name {
+  animation: rankEntry 0.45s cubic-bezier(0.17, 0.89, 0.32, 1.28) 0.05s forwards;
+  opacity: 0;
+}
+
+.rank-display.exiting {
+  animation: rankExit 0.5s ease-in forwards;
+}
