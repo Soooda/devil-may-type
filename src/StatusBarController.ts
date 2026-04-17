@@ -16,8 +16,8 @@ export class StatusBarController {
       vscode.StatusBarAlignment.Left,
       1000
     );
-    this.item.command = 'dmcStyleMeter.showPanel';
-    this.item.tooltip = 'DMC Style Meter — click to show animation panel';
+    this.item.command = 'dmt.showPanel';
+    this.item.tooltip = 'Devil May Type — click to show animation panel';
     this.item.show();
     context.subscriptions.push(this.item);
 

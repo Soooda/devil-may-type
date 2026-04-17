@@ -45,8 +45,8 @@ export class AnimationPanel {
 
   private createPanel(): void {
     this.panel = vscode.window.createWebviewPanel(
-      'dmcStyleMeter',
-      '🎮 DMC Style',
+      'dmt',
+      '🎮 Devil May Type',
       { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
       {
         enableScripts: true,

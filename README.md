@@ -61,14 +61,14 @@ Then press `F5` in VS Code to launch the Extension Development Host.
 
 | Command | Description |
 |---------|-------------|
-| `DMC Style Meter: Reset` | Reset rank to D and points to 0 |
-| `DMC Style Meter: Show Panel` | Open the rank animation panel |
+| `Devil May Type: Reset Rank` | Reset rank to D and points to 0 |
+| `Devil May Type: Show Animation Panel` | Open the rank animation panel |
 
 The status bar item is also clickable to open the animation panel.
 
 ## Configuration
 
-All settings are under `dmcStyleMeter` in VS Code preferences.
+All settings are under `dmt` in VS Code preferences.
 
 | Setting | Default | Range | Description |
 |---------|---------|-------|-------------|

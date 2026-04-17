@@ -6,7 +6,7 @@ import { StatusBarController } from './StatusBarController';
 import { StyleMeter } from './StyleMeter';
 
 export function activate(context: vscode.ExtensionContext): void {
-  const config = vscode.workspace.getConfiguration('dmcStyleMeter');
+  const config = vscode.workspace.getConfiguration('dmt');
 
   const meter = new StyleMeter(
     config.get<number>('gracePeriod', 1500),
@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   // Commands
   context.subscriptions.push(
-    vscode.commands.registerCommand('dmcStyleMeter.reset', () => {
+    vscode.commands.registerCommand('dmt.reset', () => {
       meter.reset();
       combo.reset();
       statusBar.reset();
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('dmcStyleMeter.showPanel', () => {
+    vscode.commands.registerCommand('dmt.showPanel', () => {
       animPanel.show();
     })
   );
@@ -59,8 +59,8 @@ export function activate(context: vscode.ExtensionContext): void {
   // React to config changes
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (!e.affectsConfiguration('dmcStyleMeter')) return;
-      const c = vscode.workspace.getConfiguration('dmcStyleMeter');
+      if (!e.affectsConfiguration('dmt')) return;
+      const c = vscode.workspace.getConfiguration('dmt');
       meter.updateConfig(
         c.get<number>('gracePeriod', 1500),
         c.get<number>('decayRate', 0.015)

@@ -5,3 +5,6 @@ tsconfig.json
 .gitignore
 .vscodeignore
 out/**/*.map
+assets/*.gif
+.DS_Store
+claude.md

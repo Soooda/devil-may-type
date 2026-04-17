@@ -1,7 +1,7 @@
 {
-  "name": "hit-count",
-  "displayName": "DMC Style Meter",
-  "description": "Devil May Cry style combo rating for your coding sessions",
+  "name": "devil-may-type",
+  "displayName": "Devil May Type",
+  "description": "Style combo rating for your coding sessions",
   "version": "0.0.1",
   "publisher": "hit-count",
   "engines": {
@@ -13,38 +13,38 @@
   "contributes": {
     "commands": [
       {
-        "command": "dmcStyleMeter.reset",
-        "title": "DMC Style Meter: Reset Rank"
+        "command": "dmt.reset",
+        "title": "Devil May Type: Reset Rank"
       },
       {
-        "command": "dmcStyleMeter.showPanel",
-        "title": "DMC Style Meter: Show Animation Panel"
+        "command": "dmt.showPanel",
+        "title": "Devil May Type: Show Animation Panel"
       }
     ],
     "configuration": {
-      "title": "DMC Style Meter",
+      "title": "Devil May Type",
       "properties": {
-        "dmcStyleMeter.decayRate": {
+        "dmt.decayRate": {
           "type": "number",
           "default": 0.015,
           "description": "Decay rate multiplier (higher = faster decay)",
           "minimum": 0.001,
           "maximum": 0.1
         },
-        "dmcStyleMeter.comboWindow": {
+        "dmt.comboWindow": {
           "type": "number",
           "default": 200,
           "description": "Milliseconds between keypresses to count as a combo",
           "minimum": 50,
           "maximum": 1000
         },
-        "dmcStyleMeter.pasteThreshold": {
+        "dmt.pasteThreshold": {
           "type": "number",
           "default": 50,
           "description": "Character count above which a single change is treated as a paste (not awarded full points)",
           "minimum": 1
         },
-        "dmcStyleMeter.gracePeriod": {
+        "dmt.gracePeriod": {
           "type": "number",
           "default": 1500,
           "description": "Milliseconds of inactivity before decay begins",
