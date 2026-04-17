@@ -1,6 +1,8 @@
 # Devil May **TYPE**
 
-A VS Code extension that brings **Devil May Cry**-style combo rating and visual feedback to your coding sessions. Type fast, build combos, and chase that SSS rank.
+A VS Code extension that brings **Devil May Cry** — style combo rating and visual feedback to your coding sessions. Type fast, build combos, and chase that SSS rank.
+
+![Banner](assets/main.gif)
 
 ## Features
 
