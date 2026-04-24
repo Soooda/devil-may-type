@@ -14,7 +14,25 @@
     "url": "https://github.com/Soooda/devil-may-type"
   },
   "icon": "./assets/icon.png",
-  "categories": ["Other"],
+  "galleryBanner": {
+    "color": "#1C0A0A",
+    "theme": "dark"
+  },
+  "categories": [
+	  "Visualization",
+	  "Other"
+  ],
+  "keywords": [
+	  "devil may cry",
+	  "combo",
+	  "style meter",
+	  "gamification",
+	  "fun",
+	  "typing",
+	  "visualization",
+	  "status bar"
+  ],
+  "markdown": "github",
   "activationEvents": ["onStartupFinished"],
   "main": "./out/extension.js",
   "contributes": {
