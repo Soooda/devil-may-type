@@ -7,4 +7,5 @@ tsconfig.json
 out/**/*.map
 assets/*.gif
 .DS_Store
-claude.md
+CLAUDE.md
+CONTRIBUTING.md

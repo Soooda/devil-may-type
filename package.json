@@ -3,10 +3,17 @@
   "displayName": "Devil May Type",
   "description": "Style combo rating for your coding sessions",
   "version": "0.0.1",
-  "publisher": "hit-count",
+  "publisher": "Soooda",
   "engines": {
     "vscode": "^1.80.0"
   },
+  "pricing": "Free",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soooda/devil-may-type"
+  },
+  "icon": "./assets/icon.png",
   "categories": ["Other"],
   "activationEvents": ["onStartupFinished"],
   "main": "./out/extension.js",
