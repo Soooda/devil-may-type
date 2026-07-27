@@ -32,6 +32,8 @@ export function activate(context: vscode.ExtensionContext): void {
 
   // Decay interval — runs every 100ms
   const decayInterval = setInterval(() => {
+    const comboResult = combo.tick();
+    meter.setCombo(comboResult.comboCount, comboResult.multiplier);
     const result = meter.tick();
     statusBar.update(result.state);
     // No animation on rank-down

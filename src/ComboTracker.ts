@@ -22,6 +22,14 @@ export class ComboTracker {
     return { comboCount: this.comboCount, multiplier: this.multiplierFor(this.comboCount) };
   }
 
+  tick(): { comboCount: number; multiplier: number } {
+    const now = Date.now();
+    if (this.comboCount > 0 && now - this.lastTime > this.comboWindow) {
+      this.comboCount = 0;
+    }
+    return { comboCount: this.comboCount, multiplier: this.multiplierFor(this.comboCount) };
+  }
+
   reset(): void {
     this.comboCount = 0;
     this.lastTime = 0;
