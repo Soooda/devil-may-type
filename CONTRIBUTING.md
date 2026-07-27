@@ -38,7 +38,7 @@ InputTracker  →  ComboTracker  →  StyleMeter  →  StatusBarController
 3. It calls `StyleMeter.onKeypress(charCount, isDeletion, multiplier)` which awards points and returns a `RankChangeResult`.
 4. The callback in `extension.ts` updates `StatusBarController`. On rank-up, `StatusBarController.showRankUp()` triggers a 2-second status-bar flash (star-flanked rank label in rank color, eased bar fill).
 
-**Decay loop:** A `setInterval` at 100ms calls `StyleMeter.tick()`, which decays points after the grace period and updates the status bar. Rank-downs are silent (no animation).
+**Decay loop:** A `setInterval` at 100ms calls `StyleMeter.tick()`, which decays points after the grace period and updates the status bar. Decay is rank-scaled — S/SS/SSS decay 1.3× faster than lower ranks (DMC-authentic). Rank-downs are silent (no animation).
 
 **Config changes** are handled live: `onDidChangeConfiguration` calls `updateConfig()` on `StyleMeter`, `ComboTracker`, and `InputTracker` without restarting — no reload required.
 

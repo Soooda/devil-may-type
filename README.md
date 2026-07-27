@@ -18,7 +18,7 @@ A VS Code extension that brings **Devil May Cry** — style combo rating and vis
 - **Combo Multiplier** — chain keystrokes within the combo window to multiply your points (up to 3x)
 - **Live Status Bar** — color-coded rank, progress bar, and combo multiplier displayed at a glance
 - **Rank-Up Flash** — the status bar bursts with a star-flanked rank color animation and an eased bar fill when you hit a new rank
-- **Decay Mechanic** — points decay during inactivity, keeping you on your toes
+- **Decay Mechanic** — points decay during inactivity, faster at higher ranks (DMC-authentic), keeping you on your toes
 
 ## Installation
 
@@ -40,17 +40,17 @@ All settings are under `dmt` in VS Code preferences.
 
 | Setting | Default | Range | Description |
 |---------|---------|-------|-------------|
-| `decayRate` | `0.015` | 0.001–0.1 | How fast points decay during inactivity (higher = faster) |
-| `comboWindow` | `200` | 50–1000 ms | Max gap between keystrokes to count as a combo |
+| `decayRate` | `0.004` | 0.001–0.1 | How fast points decay during inactivity (higher = faster) |
+| `comboWindow` | `350` | 50–1000 ms | Max gap between keystrokes to count as a combo |
 | `pasteThreshold` | `50` | 1+ chars | Pastes above this size are treated as a flat-point event |
-| `gracePeriod` | `1500` | 0+ ms | Inactivity time before decay begins |
+| `gracePeriod` | `1000` | 0+ ms | Inactivity time before decay begins |
 
 ## Future Work
 
 - **Session high score** — track peak rank and max points reached this session, displayed on reset or window close
 - **Rank history sparkline** — tiny ASCII graph in the status bar tooltip showing your rank trend over the last few minutes
 - **Taunt on idle** — show a Dante quip in the status bar when you've been stuck at D rank too long ("Not good enough!")
-- **Sound effects** — optional audio cue on rank-up via a small bundled clip played through the webview
+- **Sound effects** — optional audio cue on rank-up via a small bundled clip
 - **Per-language stats** — track which file types you code most stylishly in
 
 ## Contributing
