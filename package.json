@@ -2,7 +2,7 @@
   "name": "devil-may-type",
   "displayName": "Devil May Type",
   "description": "Style combo rating for your coding sessions",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "publisher": "Soooda",
   "engines": {
     "vscode": "^1.80.0"
