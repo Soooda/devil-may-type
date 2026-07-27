@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { MeterState, Rank, RANK_TABLE, rankFromPoints } from './types';
 
 const BAR_LENGTH = 15;
-const FLASH_FILL_DURATION = 400;    // ms — eased bar fill 0 → current points
+const FLASH_FILL_DURATION = 500;    // ms — eased bar fill 0 → current points
 const FLASH_TOTAL_DURATION = 2000;  // ms — total flash visibility
 const FLASH_RENDER_INTERVAL = 30;   // ms — refresh rate during the fill phase
 

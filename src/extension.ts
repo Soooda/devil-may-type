@@ -8,10 +8,10 @@ export function activate(context: vscode.ExtensionContext): void {
   const config = vscode.workspace.getConfiguration('dmt');
 
   const meter = new StyleMeter(
-    config.get<number>('gracePeriod', 1500),
-    config.get<number>('decayRate', 0.015)
+    config.get<number>('gracePeriod', 1000),
+    config.get<number>('decayRate', 0.004)
   );
-  const combo = new ComboTracker(config.get<number>('comboWindow', 200));
+  const combo = new ComboTracker(config.get<number>('comboWindow', 350));
   const statusBar = new StatusBarController(context);
 
   const tracker = new InputTracker(
@@ -56,10 +56,10 @@ export function activate(context: vscode.ExtensionContext): void {
       if (!e.affectsConfiguration('dmt')) return;
       const c = vscode.workspace.getConfiguration('dmt');
       meter.updateConfig(
-        c.get<number>('gracePeriod', 1500),
-        c.get<number>('decayRate', 0.015)
+        c.get<number>('gracePeriod', 1000),
+        c.get<number>('decayRate', 0.004)
       );
-      combo.updateConfig(c.get<number>('comboWindow', 200));
+      combo.updateConfig(c.get<number>('comboWindow', 350));
       tracker.updateConfig(c.get<number>('pasteThreshold', 50));
     })
   );

@@ -47,14 +47,14 @@
       "properties": {
         "dmt.decayRate": {
           "type": "number",
-          "default": 0.015,
+          "default": 0.004,
           "description": "Decay rate multiplier (higher = faster decay)",
           "minimum": 0.001,
           "maximum": 0.1
         },
         "dmt.comboWindow": {
           "type": "number",
-          "default": 200,
+          "default": 350,
           "description": "Milliseconds between keypresses to count as a combo",
           "minimum": 50,
           "maximum": 1000
@@ -67,7 +67,7 @@
         },
         "dmt.gracePeriod": {
           "type": "number",
-          "default": 1500,
+          "default": 1000,
           "description": "Milliseconds of inactivity before decay begins",
           "minimum": 0
         }

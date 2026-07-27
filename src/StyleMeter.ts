@@ -16,7 +16,7 @@ export class StyleMeter {
   private gracePeriod: number;
   private decayRate: number;
 
-  constructor(gracePeriod = 1500, decayRate = 0.015) {
+  constructor(gracePeriod = 1000, decayRate = 0.004) {
     this.gracePeriod = gracePeriod;
     this.decayRate = decayRate;
   }
@@ -70,7 +70,10 @@ export class StyleMeter {
     }
 
     const prevRank = this._rank;
-    const decay = Math.max(2, this.points * this.decayRate);
+    // DMC-authentic rank-scaled decay: S/SS/SSS decay 1.3× faster than lower
+    // ranks, making high ranks genuinely harder to hold.
+    const rankMult = this.rankIndex(this._rank) >= 4 ? 1.3 : 1.0;
+    const decay = Math.max(1, this.points * this.decayRate * rankMult);
     this.points = Math.max(0, this.points - decay);
 
     const newRankInfo = rankFromPoints(this.points);

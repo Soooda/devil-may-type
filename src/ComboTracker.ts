@@ -3,7 +3,7 @@ export class ComboTracker {
   private lastTime = 0;
   private comboWindow: number;
 
-  constructor(comboWindow = 200) {
+  constructor(comboWindow = 350) {
     this.comboWindow = comboWindow;
   }
 
@@ -36,9 +36,9 @@ export class ComboTracker {
   }
 
   private multiplierFor(count: number): number {
-    if (count >= 30) return 3.0;
-    if (count >= 15) return 2.0;
-    if (count >= 5)  return 1.5;
+    if (count >= 25) return 3.0;
+    if (count >= 12) return 2.0;
+    if (count >= 4)  return 1.5;
     return 1.0;
   }
 }
