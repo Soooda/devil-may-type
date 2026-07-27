@@ -40,10 +40,6 @@
       {
         "command": "dmt.reset",
         "title": "Devil May Type: Reset Rank"
-      },
-      {
-        "command": "dmt.showPanel",
-        "title": "Devil May Type: Show Animation Panel"
       }
     ],
     "configuration": {

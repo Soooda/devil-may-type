@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { AnimationPanel } from './AnimationPanel';
 import { ComboTracker } from './ComboTracker';
 import { InputTracker } from './InputTracker';
 import { StatusBarController } from './StatusBarController';
@@ -14,7 +13,6 @@ export function activate(context: vscode.ExtensionContext): void {
   );
   const combo = new ComboTracker(config.get<number>('comboWindow', 200));
   const statusBar = new StatusBarController(context);
-  const animPanel = new AnimationPanel(context);
 
   const tracker = new InputTracker(
     meter,
@@ -22,7 +20,7 @@ export function activate(context: vscode.ExtensionContext): void {
     (result) => {
       statusBar.update(result.state);
       if (result.changed && result.direction === 'up') {
-        animPanel.showRankUp(result.newRank);
+        statusBar.showRankUp(result.newRank);
       }
     },
     config.get<number>('pasteThreshold', 50)
@@ -49,12 +47,6 @@ export function activate(context: vscode.ExtensionContext): void {
       meter.reset();
       combo.reset();
       statusBar.reset();
-    })
-  );
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand('dmt.showPanel', () => {
-      animPanel.show();
     })
   );
 

@@ -15,10 +15,6 @@ export interface MeterState {
   multiplier: number;
 }
 
-export type WebviewMessage =
-  | { type: 'rankUp'; rank: Rank; label: string; color: string }
-  | { type: 'stateUpdate'; state: MeterState };
-
 export type RankChangeResult =
   | { changed: false; state: MeterState }
   | { changed: true; direction: 'up' | 'down'; newRank: Rank; state: MeterState };
