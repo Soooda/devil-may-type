@@ -17,7 +17,7 @@ A VS Code extension that brings **Devil May Cry** — style combo rating and vis
 - **Style Rank** — earn ranks from D through SSS based on your typing speed and consistency
 - **Combo Multiplier** — chain keystrokes within the combo window to multiply your points (up to 3x)
 - **Live Status Bar** — color-coded rank, progress bar, and combo multiplier displayed at a glance
-- **Rank-Up Animations** — dramatic animated webview panel slides in when you hit a new rank
+- **Rank-Up Flash** — the status bar bursts with a star-flanked rank color animation and an eased bar fill when you hit a new rank
 - **Decay Mechanic** — points decay during inactivity, keeping you on your toes
 
 ## Installation
@@ -31,9 +31,8 @@ Requires VS Code 1.80.0+.
 | Command | Description |
 |---------|-------------|
 | `Devil May Type: Reset Rank` | Reset rank to D and points to 0 |
-| `Devil May Type: Show Animation Panel` | Open the rank animation panel |
 
-The status bar item is also clickable to open the animation panel.
+The status bar item is clickable to reset your rank.
 
 ## Configuration
 

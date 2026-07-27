@@ -26,19 +26,17 @@ To install a local build: `Extensions` → `...` → `Install from VSIX...` → 
 
 ## Architecture
 
-The extension activates on `onStartupFinished` and wires together five classes in `extension.ts`:
+The extension activates on `onStartupFinished` and wires together four classes in `extension.ts`:
 
 ```
-InputTracker  →  StyleMeter  →  StatusBarController
-                     ↑               ↓
-              ComboTracker      AnimationPanel
+InputTracker  →  ComboTracker  →  StyleMeter  →  StatusBarController
 ```
 
 **Data flow for a keypress:**
 1. `InputTracker` listens to `onDidChangeTextDocument` and classifies each change as deletion, normal insert, or paste.
 2. It calls `ComboTracker.record()` to get the current combo count and multiplier.
 3. It calls `StyleMeter.onKeypress(charCount, isDeletion, multiplier)` which awards points and returns a `RankChangeResult`.
-4. The callback in `extension.ts` updates `StatusBarController` and, on rank-up, triggers `AnimationPanel`.
+4. The callback in `extension.ts` updates `StatusBarController`. On rank-up, `StatusBarController.showRankUp()` triggers a 2-second status-bar flash (star-flanked rank label in rank color, eased bar fill).
 
 **Decay loop:** A `setInterval` at 100ms calls `StyleMeter.tick()`, which decays points after the grace period and updates the status bar. Rank-downs are silent (no animation).
 
@@ -60,18 +58,12 @@ src/
 ├── ComboTracker.ts        # Combo window and multiplier logic
 ├── InputTracker.ts        # Document change listener
 ├── StatusBarController.ts # Status bar rendering
-└── AnimationPanel.ts      # Webview panel for rank-up animations
-media/
-├── panel.html             # Animation panel markup
-├── panel.js               # Panel client-side logic
-└── panel.css              # Animations and rank-specific styling
 ```
 
 ## Tech Stack
 
 - **TypeScript** — type-safe extension development
 - **esbuild** — fast bundler, outputs a single `out/extension.js`
-- **VS Code Webview API** — for the rank-up animation panel
 - **@vscode/vsce** — packaging and publishing
 
 The esbuild config lives in `esbuild.mjs`. The `vscode` module is marked external (provided by VS Code at runtime).
