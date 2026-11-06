@@ -2,7 +2,7 @@
   "name": "devil-may-type",
   "displayName": "Devil May Type",
   "description": "Style combo rating for your coding sessions",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "Soooda",
   "engines": {
     "vscode": "^1.80.0"
@@ -19,21 +19,23 @@
     "theme": "dark"
   },
   "categories": [
-	  "Visualization",
-	  "Other"
+    "Visualization",
+    "Other"
   ],
   "keywords": [
-	  "devil may cry",
-	  "combo",
-	  "style meter",
-	  "gamification",
-	  "fun",
-	  "typing",
-	  "visualization",
-	  "status bar"
+    "devil may cry",
+    "combo",
+    "style meter",
+    "gamification",
+    "fun",
+    "typing",
+    "visualization",
+    "status bar"
   ],
   "markdown": "github",
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
