@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { MeterState, Rank, RANK_TABLE, rankFromPoints } from './types';
+import { MAX_POINTS, MeterState, Rank, RANK_TABLE, rankFromPoints } from './types';
 
 const BAR_LENGTH = 15;
 const FLASH_FILL_DURATION = 500;    // ms — eased bar fill 0 → current points
@@ -20,7 +20,7 @@ export class StatusBarController {
   private item: vscode.StatusBarItem;
   private currentState: MeterState = {
     points: 0,
-    maxPoints: 2200,
+    maxPoints: MAX_POINTS,
     rank: 'D',
     comboCount: 0,
     multiplier: 1.0,
@@ -48,7 +48,7 @@ export class StatusBarController {
     // Show initial state
     this.update({
       points: 0,
-      maxPoints: 2200,
+      maxPoints: MAX_POINTS,
       rank: 'D',
       comboCount: 0,
       multiplier: 1.0,
@@ -93,7 +93,7 @@ export class StatusBarController {
     this.isFlashing = false;
     this.currentState = {
       points: 0,
-      maxPoints: 2200,
+      maxPoints: MAX_POINTS,
       rank: 'D',
       comboCount: 0,
       multiplier: 1.0,
