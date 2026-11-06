@@ -35,30 +35,51 @@ export class InputTracker {
         return;
       }
 
-      for (const change of event.contentChanges) {
-        const insertedLength = change.text.length;
-        const deletedLength = change.rangeLength;
-
-        if (insertedLength === 0 && deletedLength > 0) {
-          // Pure deletion (backspace/delete)
-          const comboResult = this.combo.record();
-          this.meter.setCombo(comboResult.comboCount, comboResult.multiplier);
-          const result = this.meter.onKeypress(1, true, 1.0);
-          this.onChange(result);
-        } else if (insertedLength > 0) {
-          if (insertedLength > this.pasteThreshold) {
-            // Treat as paste — flat award, no combo
-            const result = this.meter.onKeypress(1, false, 2.0);
-            this.onChange(result);
-          } else {
-            // Normal typing — each inserted char counts
-            const comboResult = this.combo.record();
-            this.meter.setCombo(comboResult.comboCount, comboResult.multiplier);
-            const result = this.meter.onKeypress(insertedLength, false, comboResult.multiplier);
-            this.onChange(result);
-          }
-        }
+      // Undo/redo replays whole blocks of text, not typing.
+      if (
+        event.reason === vscode.TextDocumentChangeReason.Undo ||
+        event.reason === vscode.TextDocumentChangeReason.Redo
+      ) {
+        return;
       }
+
+      // Score the change as one user action. Aggregating also stops multi-range
+      // and IME composition updates from being scored once per range.
+      let insertedLength = 0;
+      let deletedLength = 0;
+      for (const change of event.contentChanges) {
+        insertedLength += change.text.length;
+        deletedLength += change.rangeLength;
+      }
+
+      const netLength = insertedLength - deletedLength;
+
+      // Equal-length replacements (selection overwrite, IME update) are edits,
+      // not new text.
+      if (netLength === 0) {
+        return;
+      }
+
+      // Paste: flat award, combo does not advance.
+      if (netLength > this.pasteThreshold) {
+        const comboState = this.combo.tick();
+        this.meter.setCombo(comboState.comboCount, comboState.multiplier);
+        this.onChange(this.meter.onPaste(comboState.multiplier));
+        return;
+      }
+
+      // Deletion: costs points and never advances the combo.
+      if (netLength < 0) {
+        const comboState = this.combo.tick();
+        this.meter.setCombo(comboState.comboCount, comboState.multiplier);
+        this.onChange(this.meter.onKeypress(-netLength, true, comboState.multiplier));
+        return;
+      }
+
+      // Normal typing: combo advances once per user action.
+      const comboResult = this.combo.record();
+      this.meter.setCombo(comboResult.comboCount, comboResult.multiplier);
+      this.onChange(this.meter.onKeypress(netLength, false, comboResult.multiplier));
     });
   }
 }

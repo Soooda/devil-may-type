@@ -33,9 +33,9 @@ InputTracker  →  ComboTracker  →  StyleMeter  →  StatusBarController
 ```
 
 **Data flow for a keypress:**
-1. `InputTracker` listens to `onDidChangeTextDocument` and classifies each change as deletion, normal insert, or paste.
-2. It calls `ComboTracker.record()` to get the current combo count and multiplier.
-3. It calls `StyleMeter.onKeypress(charCount, isDeletion, multiplier)` which awards points and returns a `RankChangeResult`.
+1. `InputTracker` listens to `onDidChangeTextDocument`, skips undo/redo, and sums every range in the event into one net change: insert, deletion, paste, or equal-length replacement (ignored).
+2. Typing calls `ComboTracker.record()`; deletions and pastes call `ComboTracker.tick()` so the combo does not advance.
+3. It calls `StyleMeter.onKeypress(netChars, isDeletion, multiplier)` or `StyleMeter.onPaste(multiplier)`, which returns a `RankChangeResult`.
 4. The callback in `extension.ts` updates `StatusBarController`. On rank-up, `StatusBarController.showRankUp()` triggers a 2-second status-bar flash (star-flanked rank label in rank color, eased bar fill).
 
 **Decay loop:** A `setInterval` at 100ms calls `StyleMeter.tick()`, which decays points after the grace period and updates the status bar. Decay is rank-scaled — S/SS/SSS decay 1.3× faster than lower ranks (DMC-authentic). Rank-downs are silent (no animation).

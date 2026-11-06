@@ -2,9 +2,15 @@ import {
   MAX_POINTS,
   MeterState,
   Rank,
+  RANK_TABLE,
   RankChangeResult,
   rankFromPoints,
 } from './types';
+
+const MAX_GAIN = 50;
+const DELETION_PENALTY_PER_CHAR = 2;
+const MAX_DELETION_PENALTY = 50;
+const PASTE_POINTS = 20;
 
 export class StyleMeter {
   private points = 0;
@@ -27,36 +33,24 @@ export class StyleMeter {
   }
 
   onKeypress(charCount: number, isDeletion: boolean, multiplier: number): RankChangeResult {
-    const prevRank = this._rank;
     this._multiplier = multiplier;
 
-    let gain: number;
-    if (isDeletion) {
-      gain = 2;
-    } else {
-      gain = Math.min(50, 10 * multiplier * charCount);
-    }
+    // Deletions cost style. Backspacing must never build rank, and bulk
+    // deletes cost more than a single backspace, up to a fixed cap.
+    const delta = isDeletion
+      ? -Math.min(MAX_DELETION_PENALTY, DELETION_PENALTY_PER_CHAR * charCount)
+      : Math.min(MAX_GAIN, 10 * multiplier * charCount);
 
-    this.points = Math.min(MAX_POINTS, this.points + gain);
-    this.lastKeypressTime = Date.now();
+    return this.applyDelta(delta);
+  }
 
-    const newRankInfo = rankFromPoints(this.points);
-    this._rank = newRankInfo.rank;
-
-    const state = this.getState();
-
-    if (newRankInfo.rank !== prevRank) {
-      const prevIndex = this.rankIndex(prevRank);
-      const newIndex = this.rankIndex(newRankInfo.rank);
-      return {
-        changed: true,
-        direction: newIndex > prevIndex ? 'up' : 'down',
-        newRank: newRankInfo.rank,
-        state,
-      };
-    }
-
-    return { changed: false, state };
+  /**
+   * Pasted text is a flat award: it does not advance the combo and does not
+   * inherit the multiplier.
+   */
+  onPaste(multiplier: number): RankChangeResult {
+    this._multiplier = multiplier;
+    return this.applyDelta(PASTE_POINTS);
   }
 
   tick(): RankChangeResult {
@@ -76,18 +70,28 @@ export class StyleMeter {
     const decay = Math.max(1, this.points * this.decayRate * rankMult);
     this.points = Math.max(0, this.points - decay);
 
-    const newRankInfo = rankFromPoints(this.points);
-    this._rank = newRankInfo.rank;
+    this._rank = rankFromPoints(this.points).rank;
+    return this.rankChangeResult(prevRank);
+  }
 
+  private applyDelta(delta: number): RankChangeResult {
+    const prevRank = this._rank;
+
+    this.points = Math.min(MAX_POINTS, Math.max(0, this.points + delta));
+    this.lastKeypressTime = Date.now();
+    this._rank = rankFromPoints(this.points).rank;
+
+    return this.rankChangeResult(prevRank);
+  }
+
+  private rankChangeResult(prevRank: Rank): RankChangeResult {
     const state = this.getState();
 
-    if (newRankInfo.rank !== prevRank) {
-      const prevIndex = this.rankIndex(prevRank);
-      const newIndex = this.rankIndex(newRankInfo.rank);
+    if (this._rank !== prevRank) {
       return {
         changed: true,
-        direction: newIndex > prevIndex ? 'up' : 'down',
-        newRank: newRankInfo.rank,
+        direction: this.rankIndex(this._rank) > this.rankIndex(prevRank) ? 'up' : 'down',
+        newRank: this._rank,
         state,
       };
     }
@@ -119,7 +123,6 @@ export class StyleMeter {
   }
 
   private rankIndex(rank: Rank): number {
-    const order: Rank[] = ['D', 'C', 'B', 'A', 'S', 'SS', 'SSS'];
-    return order.indexOf(rank);
+    return RANK_TABLE.findIndex((entry) => entry.rank === rank);
   }
 }
