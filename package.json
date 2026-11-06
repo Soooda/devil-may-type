@@ -78,6 +78,8 @@
     "vscode:prepublish": "node esbuild.mjs --production",
     "compile": "node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
+    "test": "node esbuild.test.mjs && node --test out-test",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "package": "vsce package"
   },
   "devDependencies": {

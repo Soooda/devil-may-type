@@ -1,6 +1,10 @@
 src/
 node_modules/
+out-test/
 esbuild.mjs
+esbuild.test.mjs
+.github/
+.vscode/
 tsconfig.json
 .gitignore
 .vscodeignore
