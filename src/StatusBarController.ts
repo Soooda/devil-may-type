@@ -16,6 +16,16 @@ function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
 
+function sameState(a: MeterState, b: MeterState): boolean {
+  return (
+    a.points === b.points &&
+    a.maxPoints === b.maxPoints &&
+    a.rank === b.rank &&
+    a.comboCount === b.comboCount &&
+    a.multiplier === b.multiplier
+  );
+}
+
 export class StatusBarController {
   private item: vscode.StatusBarItem;
   private currentState: MeterState = {
@@ -46,18 +56,18 @@ export class StatusBarController {
     context.subscriptions.push({ dispose: () => this.clearFlashTimers() });
 
     // Show initial state
-    this.update({
-      points: 0,
-      maxPoints: MAX_POINTS,
-      rank: 'D',
-      comboCount: 0,
-      multiplier: 1.0,
-    });
+    this.render();
   }
 
   update(state: MeterState): void {
+    const changed = !sameState(state, this.currentState);
     this.currentState = state;
-    this.render();
+
+    // The flash timer drives its own frames, so skip redundant renders while
+    // it is active. Otherwise only repaint when something actually changed.
+    if (changed && !this.isFlashing) {
+      this.render();
+    }
   }
 
   /**
