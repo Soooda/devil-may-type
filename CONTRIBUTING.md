@@ -19,6 +19,8 @@ Then press `F5` in VS Code to launch the Extension Development Host.
 |--------|-------------|
 | `npm run compile` | Build with source maps (development) |
 | `npm run watch` | Watch mode — rebuild on file changes |
+| `npm run typecheck` | Type-check with `tsc --noEmit` |
+| `npm test` | Bundle and run the unit tests in `src/test` |
 | `npm run vscode:prepublish` | Minified production build |
 | `npm run package` | Package as `.vsix` for distribution |
 
@@ -58,12 +60,14 @@ src/
 ├── ComboTracker.ts        # Combo window and multiplier logic
 ├── InputTracker.ts        # Document change listener
 ├── StatusBarController.ts # Status bar rendering
+└── test/                  # node:test unit tests
 ```
 
 ## Tech Stack
 
 - **TypeScript** — type-safe extension development
 - **esbuild** — fast bundler, outputs a single `out/extension.js`
+- **node:test** — built-in test runner; tests are bundled into `out-test/`
 - **@vscode/vsce** — packaging and publishing
 
 The esbuild config lives in `esbuild.mjs`. The `vscode` module is marked external (provided by VS Code at runtime).
